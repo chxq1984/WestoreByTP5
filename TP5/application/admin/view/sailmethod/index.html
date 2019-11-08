@@ -1,0 +1,151 @@
+{include file="index/head"/}
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>促销方案</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+            </div>
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            促销类别
+          </div>
+        </div>
+        <div class="th th-price">
+          <div class="th-inner">
+            具体方案
+          </div>
+        </div>
+        <div class="th th-sum">
+          <div class="th-inner">
+             &nbsp&nbsp
+          </div>
+        </div>
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+      <div class="OrderList" id="goodslist">
+        
+		 <div class="order-content" style="height: 30px">
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+               
+                <img src="" style="visibility:hidden">
+                <div class="text">
+                  <div class="title" id='carname'>折扣</div>
+                </div>
+              </div>
+            </li>
+            <li class="th th-price">
+              <span class="th-su" id="one">统一折扣</span> <!--单价-->
+            </li>
+           <li class="th th-amount">
+             <div class="box-btn layui-clear" id="list-cont">
+           &nbsp;&nbsp;&nbsp;&nbsp;
+             </div>
+           </li> 
+            <li class="th th-op">
+             <a href="discountTotal">
+              <span id='dele'>管理</span> </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="order-content" style="height: 30px">
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+               
+                <img src="" style="visibility:hidden">
+                <div class="text">
+                  <div class="title" id='carname'>折扣</div>
+                </div>
+              </div>
+            </li>
+            <li class="th th-price">
+              <span class="th-su" id="one">叠加折扣</span> <!--单价-->
+            </li>
+           <li class="th th-amount">
+             <div class="box-btn layui-clear" id="list-cont">
+           &nbsp;&nbsp;&nbsp;&nbsp;
+             </div>
+           </li> 
+            <li class="th th-op">
+             <a href="discountadd">
+              <span id='dele'>管理</span> </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="order-content" style="height: 30px">
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+               
+                <img src="" style="visibility:hidden">
+                <div class="text">
+                  <div class="title" id='carname'>秒杀</div>
+                </div>
+              </div>
+            </li>
+            <li class="th th-price">
+              <span class="th-su" id="one">定点秒杀</span> <!--单价-->
+            </li>
+           <li class="th th-amount">
+             <div class="box-btn layui-clear" id="list-cont">
+           &nbsp;&nbsp;&nbsp;&nbsp;
+             </div>
+           </li> 
+            <li class="th th-op">
+             <a href="seconds">
+              <span id='dele'>管理</span> </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="" name="select-all" type="checkbox"  value="true"> -->
+            </div>
+            <!-- <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span> 件</label>-->
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!-- <span class="batch-dele-btn">批量删除</span> -->
+        </div>
+        <!-- <div class="th Settlement">
+          <button class="layui-btn" id='buynow'>结算</button>
+        </div>
+        <div class="th total">
+          <p>应付：<span class="pieces-total" id='endsumprice'>0</span></p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+{include file="index/footer"/}

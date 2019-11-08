@@ -1,0 +1,165 @@
+ {include file="index/head"/}
+
+<style type="text/css">
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;    
+    color: white;
+  padding: 15px 50px;
+  text-align: center;    
+    text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+</style>
+
+  <div class="content content-nav-base commodity-content">
+    <div class="commod-cont-wrap" style="background-image: url('__PUBLIC__/Images/index/logo5.jpg')">
+      <div class="commod-cont w1200 layui-clear" style="margin-left: 150px;width: 100px">
+        <div class="right-cont-wrap">
+          <div class="right-cont">
+
+             
+            <br>
+            
+
+
+           <div class="cont-list layui-clear" id="list-cont" style="margin-left: 355px">
+            
+            <div class="item" style="background-color: rgba(255,255,255,0.4);border: none;">
+             <div class="img">
+            <!-- <a href="{:url('index/ctbuying',['goods_name'=>$goodsname,'price'=>$seprice])}"> -->
+              <a href="javascript:;">
+            <img src={$goodsname|getphotourl}>
+          </a>
+         </div>
+        <div class="text">
+        <p class="title" style="margin-left: 110px"> {$goodsname}</p>
+        <p class="price">
+          <span style="color: black">秒杀价</span> <span class="pri">￥{$seprice}</span>
+          <span class="nub" style="color: black">秒杀量 <span style="color: red">{$goodsnumber}</span></span>
+        </p>
+      </div>
+        </div>
+
+        </div>
+            <div id="demo0" style="text-align: center;"></div>
+            <div style="text-align:center"><button class="button" id="rightSec">立即秒杀</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+  $("#login-change").hide();
+
+  var flag=0;//让setInterval只进行一次startBuying
+
+  function getLocalTime(){
+  var timestamp = Date.parse(new Date());
+  return timestamp;
+}
+  
+  function changeTime(times)//返回标准剩余秒数
+  {
+        var secondTime = parseInt(times);// 秒
+        var minuteTime = 0;// 分
+        var hourTime = 0;// 小时
+        if(secondTime > 60) {
+            //如果秒数大于60，将秒数转换成整数
+            //获取分钟，除以60取整数，得到整数分钟
+            minuteTime = parseInt(secondTime / 60);
+            //获取秒数，秒数取佘，得到整数秒数
+            secondTime = parseInt(secondTime % 60);
+            //如果分钟大于60，将分钟转换成小时
+            if(minuteTime > 60) {
+                //获取小时，获取分钟除以60，得到整数小时
+                hourTime = parseInt(minuteTime / 60);
+                //获取小时后取佘的分，获取分钟除以60取佘的分
+                minuteTime = parseInt(minuteTime % 60);
+            }
+        }
+        var result = "" + parseInt(secondTime) + "秒";
+
+        if(minuteTime > 0) {
+            result = "" + parseInt(minuteTime) + "分" + result;
+        }
+        if(hourTime > 0) {
+            result = "" + parseInt(hourTime) + "小时" + result;
+        }
+        return result;
+  }
+
+  function startBuying()//点击购买
+  {   
+      flag=1;//让此函数只进行一次
+      $("#rightSec").click(function(){
+        var username=$.cookie('username');
+        $.post('solvesecs',{username:username},function(data){
+          if(data=='1')
+          {
+            layer.msg('恭喜您秒杀成功！');
+          }
+          else
+          {
+            layer.msg('秒杀已结束！');
+
+            window.location.replace("http://localhost/tp5/public/index.php/index/index/index");
+          }
+        })
+
+      })
+  }
+
+  var preTime;//前一秒
+
+  $(document).ready(function(){
+
+    var startTime='{$time}';//结束时间，标准格式
+    var localtime=getLocalTime();
+
+    var cgtime=new Date(startTime);
+    var seconds=cgtime.getTime();//开始时间的毫秒级
+    var sepatate=seconds-localtime;//剩余秒数
+    preTime=sepatate/1000;
+
+    remainSec=changeTime(sepatate/1000);//剩余时间
+
+    if(preTime>0)
+    {
+      $("#rightSec").text(remainSec);
+    }
+    else
+    {
+      $("#rightSec").text('立即秒杀');
+      $("#rightSec").css( 'cursor', 'pointer' );
+      startBuying();
+    }
+
+  })
+
+  setInterval(function(){
+
+    preTime--;
+    remainSec=changeTime(preTime);
+    if(preTime>0)
+    {
+      $("#rightSec").text(remainSec);
+    }
+    else if(!flag)
+    {
+      $("#rightSec").text('立即秒杀');
+      $("#rightSec").css( 'cursor', 'pointer' );
+      startBuying();
+    }
+
+
+    },1000);
+
+
+
+</script>
+
+  {include file="index/footer"/}

@@ -1,0 +1,95 @@
+{include file="index/head"/}
+
+ <style type="text/css">
+  .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+  .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+  .pagination .active{background-color: #dd1a20;color: #fff;}
+  .pagination .disabled{color:#aaa;}
+  </style>
+
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>管理员</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="allCheckked" type="checkbox" value="true"> -->
+            </div>
+          <!-- <label>缩略图</label> -->
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+        
+        <div class="th th-price">
+          <div class="th-inner">
+            单价
+          </div>
+        </div>
+        <div class="th th-amount">
+          <div class="th-inner">
+            剩余量
+          </div>
+        </div>
+        <div class="th th-sum">
+          <div class="th-inner">
+            销售量
+          </div>
+        </div>
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+      <div class="OrderList" id="goodslist">
+
+
+        
+
+
+      </div>
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="" name="select-all" type="checkbox"  value="true"> -->
+            </div>
+            <!-- <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span> 件</label>-->
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!-- <span class="batch-dele-btn">批量删除</span> -->
+        </div>
+        <div class="th Settlement">
+         <a href="addgoods">  <button class="layui-btn" id='addgoods'>
+           上架新商品
+          </button> </a>
+        </div>
+        <div class="th total">
+         <!--  <p>应付：<span class="pieces-total" id='endsumprice'>0</span></p> -->
+        <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  
+$(document).ready(function(){
+
+  $("#goodslist").load("showgoods");
+
+
+})
+
+</script>
+
+{include file="index/footer"/}

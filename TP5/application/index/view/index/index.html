@@ -1,0 +1,115 @@
+  {include file="index/head"/}
+  <style type="text/css">
+  .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+  .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+  .pagination .active{background-color: #dd1a20;color: #fff;}
+  .pagination .disabled{color:#aaa;}
+  </style>
+  
+<div class="category-banner">
+              <div class="w1200"><a href="javascript:;" id="changeSec">
+                 <img src="__PUBLIC__/Images/index/noSecond.jpg" id="bigLogo" style="margin-top: 33px">
+              </a> </div>
+</div> 
+
+  <div class="content content-nav-base commodity-content">
+    <div class="commod-cont-wrap">
+      <div class="commod-cont w1200 layui-clear" style="margin-left: 150px;width: 100px;">
+        <div class="right-cont-wrap">
+          <div class="right-cont">
+
+             
+            <br>
+            <!-- <div class="sort layui-clear">
+              <a class="active" href="javascript:;" event = 'volume' id='salesnumber'>销量</a>
+              <a href="javascript:;" event = 'price' id='price'>价格</a>
+            </div> -->
+
+
+           <div class="cont-list layui-clear" id="list-cont">
+            {volist name="goodsList" id="goods"}
+              <div class="item">
+                <div class="img">
+                  <a href="{:url('index/ctbuying',['goods_name'=>$goods.goods_name,'price'=>$goods.price])}"><img src={$goods.goods_name|getphotourl}></a>
+                </div>
+                <div class="text">
+                  <p class="title"> {$goods.goods_name}</p>
+                  <p class="price">
+                    <span class="pri">￥{$goods.price}</span>
+                    <span class="nub">{$goods.sales_number}付款</span>
+                  </p>
+                </div>
+              </div>
+            {/volist}
+           </div>
+           
+            {$goodsList->render()}
+
+
+            <div id="demo0" style="text-align: center;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  $(document).ready(function(){
+
+    $.get('http://localhost/tp5/public/index.php/index/index/solvewhichway',function(data){
+      if(data=='0')
+      {
+        return;
+      }
+      else
+      {
+        $("#changeSec").attr('href','http://localhost/tp5/public/index.php/index/index/showsecskill');
+        $("#bigLogo").attr("src","__PUBLIC__/Images/index/startSec.jpg"); 
+      }
+    })
+
+    if($.cookie("account"))
+    {
+      $('#login-change').attr('href','http://localhost/tp5/public/index.php/index/index/personcentral');
+      $('#login-change').text('个人中心');
+
+      ws = new WebSocket("ws://127.0.0.1:2346");
+      ws.onopen = function() {
+        console.log("连接成功");
+        var sendId="Id#"+$.cookie("account");//代表用户
+        ws.send(sendId);
+      };
+
+      ws.onmessage = function(e) {
+        var data=e.data;
+        console.log(data);
+
+        var dataList=data.split('#');
+        if(dataList[0]=="disAll")
+        {
+          /*alert(dataList[1]+"已加入折扣，快去看看吧！");*/
+          layer.open({
+                        content: dataList[1]+"已加入折扣，快去看看吧！",
+                        btn: ['前往', '等会儿再去'],
+                        yes: function(index, layero) {
+                            /*$.post("index/ctbuying",{
+                              goods_name:dataList[1]
+                        })*/
+
+                          window.location='http://localhost/tp5/public/index.php/index/index/ctbuying/goods_name/'+dataList[1];
+                        },
+                        btn2: function(index, layero) {
+ 
+                        }
+                        ,
+                        cancel: function() {
+                            //右上角关闭回调
+                        }
+                    });
+        }
+      };
+
+    }
+  })
+</script>
+
+{include file="index/footer"/}

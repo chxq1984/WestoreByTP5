@@ -1,0 +1,267 @@
+{include file="index/head"/}
+
+  <style type="text/css">
+    .tl-price-input{
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 7px 0;
+    background: #F4F4F7;
+    border-radius: 3px;
+    padding-left:5px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s}
+
+    .tl-price-input:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+    }
+  </style>
+
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>商品秒杀</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="allCheckked" type="checkbox" value="true"> -->
+            </div>
+          <!-- <label>选择</label> -->
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+        
+        <div class="th th-amount" style="margin-left: -50px">
+          <div class="th-inner">
+            秒杀价
+          </div>
+        </div>
+        <div class="th th-sum">
+          <div class="th-inner">
+             数量
+          </div>
+        </div>
+        <div class="th th-sum">
+          <div class="th-inner">
+             秒杀时间
+          </div>
+        </div>
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+      <div class="OrderList" id="goodslist">
+        
+        {volist name="goodsList" id="goodsline"}
+        <div class="order-content"><!-- 每一个的id为list-cont1  -->
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+
+              </div>
+            </li>
+             <li class="th th-item">
+              <div class="item-cont">
+                <a href="javascript:;"><img src={$goodsline.goodsname|getphotourl} alt=""></a>
+                <div class="text">
+                  <div class="title" id='goodsname{$time}'>{$goodsline.goodsname}</div>
+                </div>
+              </div>
+
+            </li> 
+            <li class="th th-price" style="margin-left: -50px">
+              <span class="th-su" id="goodsprice{$time}">{$goodsline.seprice}</span>
+            </li>
+          <li class="th th-price">
+              <span class="th-su" id="goodsnumber{$time}">{$goodsline.goodsnumber}</span>
+            </li>
+           <li class="th th-price">
+              <span class="th-su" id="time{$time}">{$goodsline.time}</span>
+            </li>
+            
+            <li class="th th-op">
+             <a>
+              <span id='change{$time++}'>管理</span> </a>
+            </li>
+          </ul>
+        </div>{/volist}
+        
+      </div>
+      
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="" name="select-all" type="checkbox"  value="true"> -->
+            </div>
+            <!-- <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span> 件</label>-->
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!-- <span class="batch-dele-btn">批量删除</span> -->
+        </div>
+        <div class="th Settlement">
+          <button class="layui-btn" id='addcount'>增加</button>
+        </div>
+        <div class="th total">
+         <span></span>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+<div id="test" style="display: none;">
+<form>
+
+<li style="list-style: none;width: 242px;height: 38px;float: left;margin:20px 20px 10px 20px"><input type="number" name="seprice" class="tl-price-input" placeholder="秒杀价" id="seprice" style="height: 20px"></li>
+
+<li style="list-style: none;width: 242px;height: 38px;float: left;margin:0px 20px 10px 20px"><input type="number" name="senumber" class="tl-price-input" placeholder="数量" id="senumber" style="height: 20px"></li>
+
+<li style="list-style: none;width: 242px;height: 38px;float: left;margin:0px 20px 20px 20px"><input type="datetime-local" name="setime" class="tl-price-input" placeholder="秒杀时间" id="setime"/></li>
+
+</form>
+</div>
+
+<script>
+
+  function getLocalTime(){
+  var timestamp = Date.parse(new Date());
+  return timestamp;
+}
+  $(document).ready(function(){
+  for(var i=1;i<{$time};i++)
+  {
+    $("#change"+i).click({i:i},function(s){
+
+      var goodsname=$('#goodsname'+s.data.i).text();
+
+    layer.open({
+    type: 1,
+    title: '请填写以下信息',   //标题
+    area: ['300px', '280px'],   //宽高
+    shade: 0.4,   //遮罩透明度
+    content: $("#test"),//支持获取DOM元素
+    btn: ['确定', '取消'], //按钮组
+    scrollbar: false ,
+    yes: function(index){
+        
+        var seprice=$("#seprice").val();
+        var senumber=$("#senumber").val();
+        var setime=$("#setime").val();
+
+        var localtime=getLocalTime();
+        var cgtime=new Date(setime);
+        var seconds = cgtime.getTime();
+
+        if(localtime>=seconds)
+        {
+          layer.msg('请重新设置时间！');
+          return;
+        }
+        if(seprice==''||senumber=='')
+        {
+          layer.msg('请将表填写完整！');
+          return;
+        }
+        if(!(parseFloat(seprice)>=0&&parseInt(senumber)>0))
+        {
+          layer.msg('请重新填写信息！');
+          return;
+        }
+        
+        
+        $.post('changeSecond',{seprice:seprice,senumber:parseInt(senumber),setime:setime,goodsname:goodsname},function(data){
+          if(data=='1')
+          {
+            layer.msg('修改完成！');
+            parent.location.reload();
+          }
+          else if(data=='2')
+          {
+            layer.msg('已将此商品移出！');
+            parent.location.reload();
+          }
+          else if(data=='3')
+          {
+            layer.msg('一天内只能设置一次秒杀！');
+            return;
+          }
+          else if(data=='5')
+          {
+            layer.msg('秒杀间隔时间为十分钟！');
+          }
+          else if(data=='6')
+          {
+            layer.msg('秒杀活动已经开始，无法更改！');
+          }
+          else if(data=='8')
+          {
+            layer.msg('秒杀进行中，无法更改！');
+          }
+          else if(data=='7')
+          {
+            layer.msg('商品数量不足！');
+          }
+        })
+
+        }
+        });
+    })
+  }
+
+  $("#addcount").click(function(){
+    layer.prompt({
+    formType: 3,
+    value: '',
+    title: '请输入添加的商品名称'
+ }, function(value,index){
+    $.post("addSecond",{goodsname:value},
+      function(data){
+        if(data=='1')
+        {
+          layer.msg('添加完成！');          
+          layer.close(index);
+          setTimeout(function(){window.location.reload();
+},2000); 
+        }
+        else if(data=='0')
+        {
+          layer.msg('不存在此商品！');
+          return;
+        }
+        else if(data=='2')
+        {
+          layer.msg('已添加此商品！');
+          return;
+        }
+        else if(data=='3')
+        {
+          layer.msg('商品数量不足一件！');
+        }
+      })
+    })
+})
+
+  
+
+
+  })
+
+
+</script>
+
+{include file="index/footer"/}

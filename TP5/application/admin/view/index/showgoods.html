@@ -1,0 +1,89 @@
+  {volist name="goodsList" id="goodsline"}
+        <div class="order-content"><!-- 每一个的id为list-cont1  -->
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+                <a href="javascript:;" ><img src={$goodsline.goods_name|getphotourl} alt="" id="addgoods{$time}"></a>
+                <div class="text">
+                  <div class="title" id='gname{$time}'>{$goodsline.goods_name}</div>
+                </div>
+              </div>
+            </li>
+            <li class="th th-price">
+              <span class="th-su" id="gprice{$time}">{$goodsline.price}</span> 
+            </li>
+            <li class="th th-amount" id="gremain{$time}">
+              {$goodsline.remain_number}
+            </li>
+            <li class="th th-sum">
+              <span class="sum" id="gsalesnumber{$time}">{$goodsline.sales_number}</span><!--总价-->
+            </li>
+
+
+            <li class="th th-op">
+             <span id="gdown{$time++}">下架</span>
+            </li>
+          </ul>
+        </div>
+        {/volist}
+
+<script>
+  
+$(document).ready(function(){
+
+  for(var i=1;i<{$time};i++)
+  {
+    var name='#gdown'+i;
+    $(name).on('click',{id:i},function(s){
+      var goodsname=$('#gname'+s.data.id).text();
+
+      $.post('isInSeconds',{goodsname:goodsname},function(data){
+        if(data=='0')
+        {
+          layer.msg('商品在秒杀列表内，请先将商品移出秒杀列表！');
+        }
+        else
+        {
+          $("#goodslist").load("sendgoods",{goodsname:goodsname});
+          layer.msg('商品下架成功！');
+        }
+
+      })
+
+    })
+
+    var name2='#addgoods'+i;
+    $(name2).on('click',{id:i},function(s){
+      var goodsname=$('#gname'+s.data.id).text();
+      
+    layer.prompt({
+    formType: 3,
+    value: '',
+    title: '请输入添加的商品数量'
+ }, function(value,index){
+    if(!(value>='0'&&value<='9'))
+    {
+      layer.msg("请输入数字！");
+      return;
+    }
+    $.post("addoldgoods",{goodsname:goodsname,addnumber:value,id:s.data.id},
+      function(data){
+        //返回数据格式：id.number
+          temp=data.split('.');
+          id=temp[0];
+          number=temp[1];
+          layer.msg('商品增加成功！');
+          $('#gremain'+id).text(number);
+      })
+    layer.close(index);
+    })
+
+    })
+  }
+})
+
+</script>

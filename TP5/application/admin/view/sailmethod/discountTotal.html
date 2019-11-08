@@ -1,0 +1,194 @@
+{include file="index/head"/}
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>统一折扣</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="allCheckked" type="checkbox" value="true"> -->
+            </div>
+          <!-- <label>选择</label> -->
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+        <div class="th th-price">
+          <div class="th-inner">
+            原价
+          </div>
+        </div>
+        <div class="th th-amount">
+          <div class="th-inner">
+            折后价
+          </div>
+        </div>
+        <div class="th th-sum">
+          <div class="th-inner">
+             折扣
+          </div>
+        </div>
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+      <div class="OrderList" id="goodslist">
+        
+        {volist name="goodsList" id="goodsline"}
+        <div class="order-content"><!-- 每一个的id为list-cont1  -->
+          <ul class="item-content layui-clear">
+            <li class="th th-chk">
+              <div class="select-all">
+
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+                <a href="javascript:;"><img src={$goodsline.goodsname|getphotourl} alt=""></a>
+                <div class="text">
+                  <div class="title" id='gsname{$time}'>{$goodsline.goodsname}</div>
+                </div>
+              </div>
+            </li>
+            <li class="th th-price">
+              <span class="th-su" id="gsprice{$time}">{$goodsline.price}</span>
+            </li>
+          
+           <li class="th th-price">
+              <span class="th-su" id="afterdis{$time}">{$goodsline.price*$goodsline.discount}
+              </span>
+            </li>
+
+            <li class="th th-price">
+              <span class="th-su" id="gsdiscount{$time}">{$goodsline.discount}
+              </span>
+            </li>
+            
+            <li class="th th-op">
+             <a>
+              <span id='change{$time++}'>修改</span> </a>
+            </li>
+          </ul>
+        </div>{/volist}
+    {$goodsList->render()}
+      </div>
+      
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="" name="select-all" type="checkbox"  value="true"> -->
+            </div>
+            <!-- <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span> 件</label>-->
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!-- <span class="batch-dele-btn">批量删除</span> -->
+        </div>
+        <div class="th Settlement">
+          <button class="layui-btn" id='addcount'>增加</button>
+        </div>
+        <div class="th total">
+         <span></span>
+        </div> 
+      </div>
+    </div>
+  </div>
+<script >
+  $(document).ready(function(){
+
+     ws = new WebSocket("ws://127.0.0.1:2346");
+      ws.onopen = function() {
+        console.log("连接成功");
+        var sendId="Id#0";//代表管理员
+        ws.send(sendId);
+      };
+
+    $("#addcount").click(function(){
+    layer.prompt({
+    formType: 3,
+    value: '',
+    title: '请输入添加的商品名称'
+ }, function(value,index){
+
+    $.post("addtotal",{goodsname:value},
+      function(data){
+        if(data=='1')
+        {
+          layer.msg('添加完成！');
+
+          var sendData="disAll#"+value;
+          ws.send(sendData);
+
+          layer.close(index);
+          setTimeout(function(){window.location.reload();
+},2000); 
+        }
+        else if(data=='0')
+        {
+          layer.msg('不存在此商品！');
+          return;
+        }
+        else if(data=='2')
+        {
+          layer.msg('已添加此商品！');
+          return;
+        }})
+    })
+})
+
+
+    for(var i=1;i<{$time};i++)
+    {
+       var name='#change'+i;
+       $(name).click({id:i},function(s){
+    $.cookie('gsNameDis',$("#gsname"+s.data.id).text());
+    layer.prompt({
+    formType: 3,
+    value: '',
+    title: '请输入折扣数'
+ }, function(value,index){
+
+  if(!(value>='0'&&value<='9'&&parseFloat(value)<=1&&parseFloat(value)>0))
+    {
+      layer.msg('请输入合法数据！');
+      return;
+    }
+
+    $.post("solvediscount",{goodsname:$.cookie('gsNameDis'),discount:value},
+      function(data){
+        if(data=='1')
+        {
+          layer.msg('修改完成！');
+          layer.close(index);
+          setTimeout(function(){window.location.reload();
+},2000);
+        }
+        else if(data=='2')
+        {
+          layer.msg('该商品已移出此优惠！');
+          layer.close(index);
+          setTimeout(function(){window.location.reload();
+},2000);
+        }
+        })
+    }
+
+    )
+
+       })
+    }
+
+
+  })
+</script>
+
+{include file="index/footer"/}

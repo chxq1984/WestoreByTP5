@@ -1,0 +1,108 @@
+{include file="index/head"/}
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>已购商品</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+
+            </div>
+
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+
+
+        <div class="th th-price">
+          <div class="th-inner">
+            购买时间
+          </div>
+        </div>
+
+        <div class="th th-sum">
+          <div class="th-inner">
+             &nbsp&nbsp
+          </div>
+        </div>
+
+      </div>
+      <div class="OrderList" id="goodslist">
+
+      
+       
+      </div>
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+
+            </div>
+
+          </div>
+        </div>
+        <div class="th batch-deletion">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+<script>
+	$(document).ready(function(){
+
+    var totalCount={$lineNumber};
+
+    var page=1;
+    var id="goods"+page;
+    $("#goodslist").append("<div id='"+id+"'></div>");
+    askDatas(page);
+    page++;
+
+    $('#login-change').attr('href','http://localhost/tp5/public/index.php/index/index/personcentral');
+    $('#login-change').text('个人中心');
+
+        var range = 5;             //距下边界长度/单位px
+        var totalheight = 0; 
+        var main = $("#goodslist");
+
+        $(window).scroll(function(){
+            var srollPos = $(window).scrollTop();    
+            
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if(($(document).height()-range) <= totalheight)
+            {
+                if(page*10>=totalCount+10)
+                {
+                  layer.msg('已全部加载');
+                  return;
+                }
+                var id="goods"+page;
+                main.append("<div id='"+id+"'></div>");
+                askDatas(page);
+                page++;
+                setTimeout(function(){
+
+                }, 5000);
+            }
+        });
+
+
+
+})
+
+function askDatas(page)
+{
+   $("#goods"+page).load("showPage",{page:page});
+}
+
+</script>
+
+{include file="index/footer"/}

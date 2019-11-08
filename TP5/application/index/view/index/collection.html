@@ -1,0 +1,75 @@
+{include file="index/head"/}
+  <div class="content content-nav-base shopcart-content">
+    <div class="banner-bg w1200">
+      <h3>美食商城</h3>
+      <p>收藏夹</p>
+    </div>
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="allCheckked" type="checkbox" value="true"> -->
+            </div>
+          <!-- <label>选择</label> -->
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+        <div class="th th-price">
+          <div class="th-inner">
+            单价
+          </div>
+        </div>
+        <!-- <div class="th th-amount">
+          <div class="th-inner">
+            数量
+          </div>
+        </div> -->
+        <div class="th th-sum">
+          <div class="th-inner">
+             &nbsp&nbsp
+          </div>
+        </div>
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+      <div class="OrderList" id="goodslist">
+        
+      </div>
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!-- <input class="check-all check" id="" name="select-all" type="checkbox"  value="true"> -->
+            </div>
+            <!-- <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span> 件</label>-->
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!-- <span class="batch-dele-btn">批量删除</span> -->
+        </div>
+        <!-- <div class="th Settlement">
+          <button class="layui-btn" id='buynow'>结算</button>
+        </div>
+        <div class="th total">
+          <p>应付：<span class="pieces-total" id='endsumprice'>0</span></p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+<script>
+	$(document).ready(function(){
+		$('#goodslist').load('senddata.html',{goodsname:'0'});
+    $('#login-change').attr('href','http://localhost/tp5/public/index.php/index/index/personcentral');
+    $('#login-change').text('个人中心');
+	})
+</script>
+
+{include file="index/footer"/}

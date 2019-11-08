@@ -1,0 +1,39 @@
+{include file="index/head"/}
+<div class="content content-nav-base  login-content">
+<div class="login-bg">
+      <div class="login-cont w1200">
+        <div class="form-box">
+          <form class="layui-form" id="login-post"  action="ctmain" method="post">
+            <legend>账号登录</legend>
+            <div class="layui-form-item">
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="tel" name="account" id="phone" lay-verify="required|phone" placeholder="请输入账号" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="password" name="password" id="phone" lay-verify="required|phone" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item login-btn">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="return true">登录</button>
+                <div>&nbsp;</div>
+            <div><a href="register" style="color: gray">立即注册</a></div>
+              </div>
+
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+{include file="index/footer"/}

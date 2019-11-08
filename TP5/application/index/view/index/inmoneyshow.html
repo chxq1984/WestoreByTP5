@@ -1,0 +1,40 @@
+{include file="index/head"/}
+<div class="content content-nav-base  login-content">
+<div class="login-bg">
+	<div style="width: 100%; background:url(http://localhost/tp5/public/static/Images/index/money.jpg) no-repeat; background-size: cover">
+      <div class="login-cont w1200">
+        <div class="form-box">
+          <form class="layui-form" id="login-post"  action="inmoney" method="post">
+            <legend>账号充值</legend>
+            <div class="layui-form-item">
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="number" name="price" id="phone" lay-verify="required|phone" placeholder="请输入充值金额" autocomplete="off" class="layui-input" style="height: 40px">
+                </div>
+              </div>
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="password" name="password" id="phone" lay-verify="required|phone" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item login-btn">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="return true">确认</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+   
+  $('#login-change').attr('href','http://localhost/tp5/public/index.php/index/index/personcentral');
+  $('#login-change').text('个人中心');
+
+</script>
+{include file="index/footer"/}
